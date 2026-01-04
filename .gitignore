@@ -137,6 +137,7 @@ logs/
 *.sqlite3
 *.db
 *.db-journal
+.history/
 data/
 data/**
 outputs/
