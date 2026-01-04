@@ -1,0 +1,9 @@
+FROM prefecthq/prefect:3-python3.13
+
+WORKDIR /app
+
+COPY pyproject.toml uv.lock ./
+
+RUN pip install uv && uv pip install --system .
+
+COPY scripts/ ./scripts/
