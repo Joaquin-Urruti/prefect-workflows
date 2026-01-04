@@ -14,7 +14,7 @@ format:
 
 # Prefect Workflows - User Guide
 
-Welcome to the comprehensive Prefect usage guide in Docker for the Espartina project. This guide will teach you everything from basic concepts to advanced configurations.
+Welcome to the comprehensive Prefect usage guide in Docker. This guide will teach you everything from basic concepts to advanced configurations.
 
 ## Table of Contents
 
@@ -216,7 +216,7 @@ def my_first_flow(name: str = "World"):
 
 if __name__ == "__main__":
     # Run locally for testing
-    my_first_flow(name="Espartina")
+    my_first_flow(name="World")
 ```
 
 ### Step 2: Run Locally
