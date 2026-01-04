@@ -57,23 +57,37 @@ Create the outputs directory (the others will be created automatically):
 mkdir -p outputs
 ```
 
-### 1.2 Configure Environment Variables (Optional)
+### 1.2 Configure Environment Variables
 
-You can create a `.env` file in the project root to customize credentials:
+Copy the environment template and customize it for your deployment:
 
 ```bash
-cat > .env << 'EOF'
+# Copy the template file
+cp .env.example .env
+
+# Edit the file with your preferred editor
+nano .env
+```
+
+Update the password in `.env`:
+
+```env
 # PostgreSQL Configuration
 PREFECT_POSTGRES_USER=prefect
-PREFECT_POSTGRES_PASSWORD=prefect_secure_password_2024
+PREFECT_POSTGRES_PASSWORD=your_secure_random_password_here
 PREFECT_POSTGRES_DB=prefect
 
 # Timezone
 TZ=America/Argentina/Buenos_Aires
-EOF
 ```
 
-**Security note:** Make sure `.env` is in your `.gitignore` (already configured).
+> 💡 **Tip**: Generate a strong password with: `openssl rand -base64 32`
+
+**Security notes:**
+- ✅ The `.env` file is already in `.gitignore` and will NOT be committed
+- ✅ The `.env.example` template is safe to commit (contains placeholders only)
+- ⚠️ For production, always use strong, unique passwords
+- ⚠️ Without a `.env` file, weak default values will be used (development only)
 
 ## Step 2: First Installation (Initial Deployment)
 
