@@ -143,7 +143,7 @@ data/**
 outputs/
 scripts/
 *.py
-!scripts/*test.py
+!scripts/*test*.py
 
 # ============================================
 # Jupyter Notebooks
