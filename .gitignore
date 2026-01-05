@@ -143,6 +143,7 @@ scripts/Modules/
 data/
 data/**
 outputs/
+pdf/
 scripts/
 *.py
 !scripts/*test*.py
