@@ -7,6 +7,8 @@ A production-ready Prefect workflow orchestration platform running on Docker. Th
 [![Docker](https://img.shields.io/badge/Docker-Compose-blue)](https://www.docker.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+> 🚀 **New here?** Check out the [Quick Start Guide](QUICK_START.md) to get running in 5 minutes!
+
 ---
 
 ## Table of Contents
@@ -257,6 +259,8 @@ Before you begin, ensure you have the following installed:
 ## Quick Start
 
 Get up and running in 5 minutes:
+
+> 📖 **For a more concise quick start guide, see [QUICK_START.md](QUICK_START.md)**
 
 ### 1. Clone the Repository
 
@@ -1182,6 +1186,8 @@ docker compose logs -f prefect-worker
 ### Available Guides
 
 - **[README.md](README.md)** - This file (main documentation)
+- **[QUICK_START.md](QUICK_START.md)** - 5-minute quick start guide
+- **[TUTORIAL_PREFECT_DOCKER.md](TUTORIAL_PREFECT_DOCKER.md)** - Complete tutorial with Docker
 - **[deploy.md](deploy.md)** - Detailed deployment instructions
 - **[prefect-user-guide-en.md](prefect-user-guide-en.md)** - Complete user guide (English)
 - **[prefect-user-guide-sp.md](prefect-user-guide-sp.md)** - Complete user guide (Spanish)

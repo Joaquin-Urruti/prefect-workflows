@@ -145,23 +145,9 @@ docker compose logs prefect-worker
 docker compose logs -f prefect-worker
 ```
 
-## Step 3: Initial Prefect Configuration
+## Step 3: Verify UI Access
 
-### 3.1 Create the Work Pool
-
-The worker needs a work pool to execute tasks. Create it by running:
-
-```bash
-docker compose exec prefect-server prefect work-pool create local-pool --type process
-```
-
-### 3.2 Verify Work Pool Creation
-
-```bash
-docker compose exec prefect-server prefect work-pool ls
-```
-
-### 3.3 Access Prefect UI
+### 3.1 Access Prefect UI
 
 Open your browser and visit:
 
@@ -169,15 +155,29 @@ Open your browser and visit:
 http://localhost:4200
 ```
 
-You should see the Prefect UI dashboard where you can:
-- Monitor flows
-- View runs and logs
-- Manage deployments
-- Administer work pools
+**Important:** Make sure to use the complete URL with the port `:4200`
 
-## Step 4: Deploy Your Workflows
+You should see the Prefect UI dashboard. If you see an error "Can't connect to Server API", the configuration has already been fixed in docker-compose.yml with the `PREFECT_UI_API_URL` environment variable.
 
-### 4.1 Verify Your Scripts
+## Step 4: Initial Prefect Configuration
+
+### 4.1 Create the Work Pool
+
+The worker needs a work pool to execute tasks. Create it by running:
+
+```bash
+docker compose exec prefect-server prefect work-pool create local-pool --type process
+```
+
+### 4.2 Verify Work Pool Creation
+
+```bash
+docker compose exec prefect-server prefect work-pool ls
+```
+
+## Step 5: Deploy Your Workflows
+
+### 5.1 Verify Your Scripts
 
 Make sure your workflows are in the `scripts/` folder:
 
@@ -185,7 +185,7 @@ Make sure your workflows are in the `scripts/` folder:
 ls -la scripts/
 ```
 
-### 4.2 Deploy a Workflow from the Container
+### 5.2 Deploy a Workflow from the Container
 
 Execute the deployment from inside the worker container:
 
@@ -199,16 +199,16 @@ This command will run the `test.py` script that contains the deployment configur
 - Schedule (cron)
 - Tags
 
-### 4.3 Verify the Deployment in the UI
+### 5.3 Verify the Deployment in the UI
 
 Go to Prefect UI and:
 1. Navigate to "Deployments"
 2. You should see your "hello-world" deployment
 3. Verify the configured schedule
 
-## Step 5: Persistent Data Management
+## Step 6: Persistent Data Management
 
-### 5.1 Verify Data Persistence
+### 6.1 Verify Data Persistence
 
 All this data persists on your local disk:
 
@@ -227,7 +227,7 @@ ls -lh logs/worker/
 ls -lh outputs/
 ```
 
-### 5.2 Data Backup
+### 6.2 Data Backup
 
 To backup all your data:
 
@@ -242,7 +242,7 @@ tar -czf prefect-backup-$(date +%Y%m%d).tar.gz data/ logs/ outputs/
 docker compose up -d
 ```
 
-### 5.3 Restore from Backup
+### 6.3 Restore from Backup
 
 ```bash
 # Stop services
@@ -258,9 +258,9 @@ tar -xzf prefect-backup-YYYYMMDD.tar.gz
 docker compose up -d
 ```
 
-## Step 6: Updates and Maintenance
+## Step 7: Updates and Maintenance
 
-### 6.1 Update Your Scripts
+### 7.1 Update Your Scripts
 
 When you modify your scripts in the `scripts/` folder:
 
@@ -273,7 +273,7 @@ docker compose build prefect-worker
 docker compose up -d prefect-worker
 ```
 
-### 6.2 Update Prefect Version
+### 7.2 Update Prefect Version
 
 To update to a new version of Prefect:
 
@@ -292,7 +292,7 @@ docker compose down
 docker compose up -d
 ```
 
-### 6.3 View Resource Usage
+### 7.3 View Resource Usage
 
 ```bash
 # View CPU, memory, network usage
@@ -302,7 +302,7 @@ docker stats
 docker system df -v
 ```
 
-### 6.4 Clean Old Logs
+### 7.4 Clean Old Logs
 
 Docker logs are automatically rotated (maximum 10MB per file, 3 files). For Prefect logs:
 
@@ -311,9 +311,9 @@ Docker logs are automatically rotated (maximum 10MB per file, 3 files). For Pref
 find logs/ -name "*.log" -mtime +30 -delete
 ```
 
-## Step 7: Troubleshooting
+## Step 8: Troubleshooting
 
-### 7.1 Services Won't Start
+### 8.1 Services Won't Start
 
 ```bash
 # View detailed logs
@@ -328,7 +328,7 @@ docker compose down -v
 docker compose up -d
 ```
 
-### 7.2 Worker Can't Connect to Server
+### 8.2 Worker Can't Connect to Server
 
 ```bash
 # Verify connectivity
@@ -338,7 +338,25 @@ docker compose exec prefect-worker curl http://prefect-server:4200/api/health
 docker compose exec prefect-worker env | grep PREFECT
 ```
 
-### 7.3 Output Permission Issues
+### 8.3 UI Shows "Can't connect to Server API"
+
+If you see this error in the browser:
+
+```bash
+# Stop services
+docker compose down
+
+# Verify docker-compose.yml has this environment variable in prefect-server:
+PREFECT_UI_API_URL: http://localhost:4200/api
+
+# Restart services
+docker compose up -d
+
+# Access the UI with the complete URL including port
+http://localhost:4200
+```
+
+### 8.4 Output Permission Issues
 
 ```bash
 # Grant full permissions to outputs folder
@@ -348,7 +366,22 @@ chmod -R 777 outputs/
 docker compose exec prefect-worker chmod -R 777 /app/outputs
 ```
 
-### 7.4 Corrupted Database
+### 8.5 PostgreSQL Authentication Error
+
+If you see `password authentication failed for user`:
+
+```bash
+# Stop services
+docker compose down
+
+# Delete postgres data (YOU WILL LOSE YOUR DATA!)
+rm -rf data/postgres/
+
+# Restart (new DB will be created with credentials from .env)
+docker compose up -d
+```
+
+### 8.6 Corrupted Database
 
 ```bash
 # Stop services
@@ -361,7 +394,7 @@ rm -rf data/postgres/
 docker compose up -d
 ```
 
-## Step 8: Useful Commands
+## Step 9: Useful Commands
 
 ### Container Management
 

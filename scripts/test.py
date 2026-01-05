@@ -39,9 +39,12 @@ def hello_world():
 
 
 if __name__ == "__main__":
-    hello_world.deploy(
+    hello_world.from_source(
+        source="/app/scripts",
+        entrypoint="test.py:hello_world",
+    ).deploy(
         name="hello-world",
         work_pool_name="local-pool",
-        cron="* * * * *",  # Ejecutar cada minuto
+        cron="* * * * *",
         tags=["local", "test"],
     )

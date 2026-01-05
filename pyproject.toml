@@ -5,5 +5,17 @@ description = "Prefect workflows"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "dotenv>=0.9.9",
+    "fiona>=1.10.1",
+    "geopandas>=1.1.2",
+    "pandas>=2.3.3",
     "prefect>=3.6.9",
+    "requests>=2.32.5",
+    "shapely>=2.1.2",
+    "tqdm>=4.67.1",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.1.0",
 ]

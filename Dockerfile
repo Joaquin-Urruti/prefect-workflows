@@ -2,14 +2,25 @@ FROM prefecthq/prefect:3-python3.13
 
 WORKDIR /app
 
+# Install system dependencies for geospatial libraries (GDAL, GEOS, PROJ)
+RUN apt-get update && apt-get install -y \
+    gdal-bin \
+    libgdal-dev \
+    libgeos-dev \
+    libproj-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Instalar uv para gestión de dependencias
 RUN pip install --no-cache-dir uv
 
 # Copiar archivos de dependencias primero (mejor cache de Docker)
 COPY pyproject.toml uv.lock ./
 
-# Sincronizar dependencias desde el lockfile
+# Sincronizar dependencias desde el lockfile (crea .venv)
 RUN uv sync --frozen --no-dev
+
+# Activar .venv agregándolo al PATH
+ENV PATH="/app/.venv/bin:$PATH"
 
 # Crear directorios necesarios para outputs y logs
 RUN mkdir -p /app/outputs /app/scripts /root/.prefect/logs

@@ -29,6 +29,7 @@ service_account*.json
 # Python
 # ============================================
 __pycache__/
+__marimo__/
 *.py[cod]
 *$py.class
 *.so
@@ -137,6 +138,7 @@ logs/
 *.sqlite3
 *.db
 *.db-journal
+scripts/Modules/
 .history/
 data/
 data/**
