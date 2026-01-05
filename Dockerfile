@@ -1,5 +1,5 @@
 # ==========================================
-# Stage 1: Build stage (con todas las tools)
+# Stage 1: Build stage (with all tools)
 # ==========================================
 FROM ghcr.io/osgeo/gdal:ubuntu-small-3.9.0 AS builder
 
@@ -34,7 +34,7 @@ COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-dev
 
 # ==========================================
-# Stage 2: Runtime stage (solo lo necesario)
+# Stage 2: Runtime stage (only necessary)
 # ==========================================
 FROM ghcr.io/osgeo/gdal:ubuntu-small-3.9.0
 
