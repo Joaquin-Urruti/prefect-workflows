@@ -62,14 +62,14 @@ COPY --from=builder /app/.venv /app/.venv
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Crear directorios necesarios para outputs y logs
-RUN mkdir -p /app/outputs /app/scripts /root/.prefect/logs
+RUN mkdir -p /app/outputs /app/test_outputs /app/scripts /root/.prefect/logs
 
 # Copiar el código fuente
 COPY scripts/ ./scripts/
 
 # Asegurar permisos correctos
 RUN chmod -R 755 /app/scripts && \
-    chmod -R 777 /app/outputs
+    chmod -R 777 /app/outputs /app/test_outputs
 
 # Variables de entorno
 ENV PYTHONUNBUFFERED=1 \

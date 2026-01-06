@@ -172,8 +172,10 @@ prefect-workflows/
 │   ├── server/                # Prefect server logs
 │   ├── services/              # Prefect services logs
 │   └── worker/                # Worker execution logs
-├── outputs/                    # Workflow outputs (gitignored)
+├── outputs/                    # Production outputs (gitignored, symlinked to OneDrive)
 │   └── [workflow_outputs]/    # Task outputs, reports, datasets
+├── test_outputs/               # Test/dev outputs (gitignored, local only)
+│   └── [test_outputs]/        # Outputs when test=True
 ├── scripts/                    # Workflow definitions
 │   ├── __pycache__/           # Python cache (gitignored)
 │   ├── main.py                # Example simple script
@@ -193,9 +195,15 @@ prefect-workflows/
 
 Key Directories:
 ├── scripts/        → Place your Python workflows here
-├── outputs/        → Workflow outputs are saved here
+├── outputs/        → Production outputs (symlinked to OneDrive in production)
+├── test_outputs/   → Test/development outputs (local, no symlinks)
 ├── logs/           → All logs are persisted here
 └── data/           → Database persistence
+
+**Testing vs Production:**
+- **Test mode** (`test=True`): Outputs go to `test_outputs/` (local, no symlinks)
+- **Production mode** (`test=False`): Outputs go to `outputs/` (symlinked to OneDrive)
+- See `SYMLINKS_README.md` for symlink setup details
 ```
 
 ### File Descriptions

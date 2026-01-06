@@ -143,6 +143,7 @@ scripts/Modules/
 data/
 data/**
 outputs/
+test_outputs/
 pdf/
 scripts/
 *.py
@@ -212,3 +213,17 @@ local_settings.py
 
 
 prefect-user-guide-sp.md
+
+# ============================================
+# Symlink Configuration
+# ============================================
+# Real configuration files (machine-specific)
+symlink_config.json
+create_symlinks.ps1
+
+# Keep example files
+!symlink_config.example.json
+!create_symlinks.example.ps1
+
+# Test scripts
+test_detection.py

@@ -156,6 +156,7 @@ services:
     volumes:
       - ./scripts:/app/scripts
       - ./outputs:/app/outputs
+      - ./test_outputs:/app/test_outputs
       - ./logs/worker:/root/.prefect/logs
       - prefect-data:/root/.prefect
     working_dir: /app
